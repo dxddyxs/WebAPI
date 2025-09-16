@@ -48,5 +48,25 @@ namespace WebAPI.Controllers
 
             return CreatedAtAction(nameof(SearchById), new { id = productModel.Id}, productModel);
         }
+
+        [HttpPut("{id}")]
+        public ActionResult<ProductModel> EditProduct(ProductModel productModel, int id)
+        {
+            var product = _context.Products.Find(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            product.Name = productModel.Name;
+            product.Description = productModel.Description;
+            product.Price = productModel.Price;
+
+            _context.Products.Update(product);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
