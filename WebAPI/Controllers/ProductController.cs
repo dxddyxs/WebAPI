@@ -21,5 +21,18 @@ namespace WebAPI.Controllers
             var products = _context.Products.ToList();
             return Ok(products);
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<ProductModel> SearchById(int id)
+        {
+            var product = _context.Products.Find(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
     }
 }
