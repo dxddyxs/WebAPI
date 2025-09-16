@@ -34,5 +34,19 @@ namespace WebAPI.Controllers
 
             return Ok(product);
         }
+
+        [HttpPost]
+        public ActionResult<ProductModel> CreateProduct(ProductModel productModel)
+        {
+            if (string.IsNullOrEmpty(productModel.Name) || productModel.Name.Length < 3)
+            {
+                return BadRequest();
+            }
+
+            _context.Products.Add(productModel);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(SearchById), new { id = productModel.Id}, productModel);
+        }
     }
 }
