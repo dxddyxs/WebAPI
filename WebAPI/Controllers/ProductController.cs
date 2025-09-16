@@ -68,5 +68,21 @@ namespace WebAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult<ProductModel> DeleteProduct(int id)
+        {
+            var product = _context.Products.Find(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
